@@ -82,7 +82,7 @@ class MatrizSeguimientoRESTController extends Controller {
                 if($ind){
                     
                     $indicador = array();
-                    $indicadores_in[] = $value->id_desempeno;
+                    $indicadores_in[] = $ind->getId();
                     $indicador['id'] = $ind->getId();
                     $indicador['nombre'] = $ind->getNombre();
                     
@@ -136,7 +136,7 @@ class MatrizSeguimientoRESTController extends Controller {
             }
            
             $indicadores_in = implode(",", $indicadores_in);
-            $statement = $connection->prepare("SELECT id FROM matriz_indicadores_desempeno WHERE id not in($indicadores_in)");
+            $statement = $connection->prepare("SELECT id FROM matriz_indicadores_desempeno WHERE id not in($indicadores_in) and id_matriz = '".$matrix."'");
             $statement->execute();
             $indicadores = $statement->fetchAll();            
 

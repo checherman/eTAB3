@@ -72,9 +72,9 @@ doctrine:
 swiftmailer:
     transport: %mailer_transport%
     host:      %mailer_host%
-    username:  %mailer_user%
+    username:  %mailer_username%
     password:  %mailer_password%
-    spool:     { type: memory }
+    port: %mailer_port%
 
 sonata_block:
     default_contexts: [cms]
@@ -241,18 +241,6 @@ mobile_detect:
         mobile: ~
         tablet: ~
     switch_device_view: ~
-
-swiftmailer:
-    transport:  gmail
-    #encryption: ssl
-    #auth_mode:  login
-    #host:      smtp.gmail.com
-    username:  boletin.dev.test@gmail.com
-    password:  Boletin@test
-    #spool:     { type: memory }
-    #disable_delivery:  true
-    #schiapassm2015@gmail.com
-    #bit@2013 (B mayuscula o minuscula)
 
 sensio_framework_extra:
     view:
