@@ -267,6 +267,7 @@ App
     $scope.meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
     $scope.cargarCatalogo = function(url, modelo) {
         $scope.cargando = true;
+        $scope.dato.matriz = [];
         Crud.lista(url, function(data) {
 
             if (data.status == 200) {
