@@ -268,6 +268,7 @@ App
     $scope.cargarCatalogo = function(url, modelo) {
         $scope.cargando = true;
         $scope.dato.matriz = [];
+        $scope.statusx = [];
         Crud.lista(url, function(data) {
 
             if (data.status == 200) {
