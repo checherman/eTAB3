@@ -1285,7 +1285,6 @@ function acciones_button()
         function(resp) 
 		{
 			
-            $('#myModalLabel2').html($('#' + zona+' .titulo').find("span").text());
             $('#sql').html(resp);
             //Dejar solo el código html de la tabla, quitar todo lo demás
 
@@ -1317,6 +1316,7 @@ function acciones_button()
             });
             $('#sql .DTTT_container').css('float', 'left');
             $('#myModal2').modal('show');
+            $('#myModal2 h4').html($('#' + zona+' .titulo_indicador').attr('nombre'));
         }, 'html');
     });
 	$('body').on('click','.filtros_dimensiones A',function(e)

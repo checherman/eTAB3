@@ -1,4 +1,4 @@
-	//para cargas de los indicadores
+    //para cargas de los indicadores
     var ruta_sala_publica = '0/0';
     
 $(document).ready(function() {
@@ -71,34 +71,34 @@ $(document).ready(function() {
     function sala_agregar_fila() {
         var cant = $('DIV.area_grafico').length;
         var html =  '<div class="col-md-4">'+
-						'<div class="panel panel-default area_grafico zona_actual" data-id="'+parseInt(cant+1)+'" id="grafico_' + parseInt(cant+1) + '" >' +						
-						'<div class="panel-heading">'+
-						'<strong>'+
-							'<div class="titulo"><span class="titulo_indicador"></span>'+
-							'<span>('+trans.por+' <span class="dimension" ></span>)</span></div>'+
-						'</strong>'+
-						'</div>'+
-						'<div class="panel-body">'+	
-							'<div class="controles btn-toolbar"></div>' +
-							'<ol class="filtros_dimensiones breadcrumb" style="margin-top:10px; display:none;"></ol>' +		
-							'<div class="info" style="display:none;" ></div>' +
-							'<div class="row_grafico" style="margin-top:10px">' +
-								'<div class="grafico" ></div>' +
-							'</div>' +  
-						'</div>'+
-						'<div class="panel-footer"></div>'+
-					'</div></div>';         
-		var contador_indicadores = 0;
-		$('#sala .row').last().find('.col-md-4').each(function(){
-			contador_indicadores++;
-		});
-		if(contador_indicadores==0||contador_indicadores==3)
-		{
-			row="<div class='row'>"+html+"</div>";
-			$('#sala').append(row); 
-		}
-		else if(contador_indicadores<=2)
-			$('#sala .row').last().append(html);        
+                        '<div class="panel panel-default area_grafico zona_actual" data-id="'+parseInt(cant+1)+'" id="grafico_' + parseInt(cant+1) + '" >' +                        
+                        '<div class="panel-heading">'+
+                        '<strong>'+
+                            '<div class="titulo"><span class="titulo_indicador"></span>'+
+                            '<span>('+trans.por+' <span class="dimension" ></span>)</span></div>'+
+                        '</strong>'+
+                        '</div>'+
+                        '<div class="panel-body">'+ 
+                            '<div class="controles btn-toolbar"></div>' +
+                            '<ol class="filtros_dimensiones breadcrumb" style="margin-top:10px; display:none;"></ol>' +     
+                            '<div class="info" style="display:none;" ></div>' +
+                            '<div class="row_grafico" style="margin-top:10px">' +
+                                '<div class="grafico" ></div>' +
+                            '</div>' +  
+                        '</div>'+
+                        '<div class="panel-footer"></div>'+
+                    '</div></div>';         
+        var contador_indicadores = 0;
+        $('#sala .row').last().find('.col-md-4').each(function(){
+            contador_indicadores++;
+        });
+        if(contador_indicadores==0||contador_indicadores==3)
+        {
+            row="<div class='row'>"+html+"</div>";
+            $('#sala').append(row); 
+        }
+        else if(contador_indicadores<=2)
+            $('#sala .row').last().append(html);        
 
            
         $('DIV.area_grafico').click(function() {
@@ -187,10 +187,10 @@ $(document).ready(function() {
     //para cargas de los indicadores
       
     if ($('#sala_publica').length > 0)
-	{
-		obj = $('#sala_publica');
-		ruta_sala_publica = $(obj).attr('sala-token') + '/' + $(obj).attr('sala-id');
-		mostrarGraficos(obj);
-	}
+    {
+        obj = $('#sala_publica');
+        ruta_sala_publica = $(obj).attr('sala-token') + '/' + $(obj).attr('sala-id');
+        mostrarGraficos(obj);
+    }
     
 });
