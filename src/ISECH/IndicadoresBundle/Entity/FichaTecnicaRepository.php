@@ -488,12 +488,14 @@ class FichaTecnicaRepository extends EntityRepository
         $grupo_extra = '';
         $significado = $this->getEntityManager()->getRepository('IndicadoresBundle:SignificadoCampo')
                 ->findOneBy(array('codigo' => $dimension));
-        $catalogo = $significado->getCatalogo();
-        if ($catalogo != '') {
-            $rel_catalogo = " INNER JOIN  $catalogo  B ON (A.$dimension::text = B.id::text) ";
-            $dimension = 'B.descripcion';
-            $otros_campos = ' B.id AS id_category, ';
-            $grupo_extra = ', B.id ';
+        if($significado){
+            $catalogo = $significado->getCatalogo();
+            if ($catalogo != '') {
+                $rel_catalogo = " INNER JOIN  $catalogo  B ON (A.$dimension::text = B.id::text) ";
+                $dimension = 'B.descripcion';
+                $otros_campos = ' B.id AS id_category, ';
+                $grupo_extra = ', B.id ';
+            }
         }
         $jurisdiccion="";
         $juris="SELECT ctljurisdiccion_id FROM user_ctljurisdiccion where user_id='$user'";
@@ -528,13 +530,15 @@ class FichaTecnicaRepository extends EntityRepository
                 //Si el filtro es un catálogo, buscar su id correspondiente
                 $significado = $this->getEntityManager()->getRepository('IndicadoresBundle:SignificadoCampo')
                         ->findOneBy(array('codigo' => $campo));
-                $catalogo = $significado->getCatalogo();
-                $sql_ctl = ''; 
-                
-                if ($catalogo != '') {
-                    $sql_ctl = "SELECT id FROM $catalogo WHERE descripcion ='$valor' order by id";
-                    $reg = $this->getEntityManager()->getConnection()->executeQuery($sql_ctl)->fetch();
-                    $valor = $reg['id'];                    
+                if($significado){
+                    $catalogo = $significado->getCatalogo();
+                    $sql_ctl = ''; 
+                    
+                    if ($catalogo != '') {
+                        $sql_ctl = "SELECT id FROM $catalogo WHERE descripcion ='$valor' order by id";
+                        $reg = $this->getEntityManager()->getConnection()->executeQuery($sql_ctl)->fetch();
+                        $valor = $reg['id'];                    
+                    }
                 }
                 $sql .= " AND A." . $campo . " = '$valor' ";
             }

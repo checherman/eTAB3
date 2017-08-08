@@ -320,6 +320,7 @@ App
         var datos = $scope.dato;
         var anio = $filter('date')(anio, "yyyy");
         datos.anio = anio;
+        datos.matrix = $scope.matriz;
         $scope.cargando = true;
         Crud.crear(url, $.param(datos), 'application/x-www-form-urlencoded;charset=utf-8;', function(data) {
             if (data.status == 200 || data.status == 201) {
