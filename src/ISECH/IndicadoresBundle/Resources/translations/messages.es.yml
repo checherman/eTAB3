@@ -289,7 +289,7 @@ tablero:
   tipo_grafico_principal: Tipo de gráfico principal
   tipo_grafico_secundario: Tipo de gráfico secundario
 
-_no_clasificados_ : 'Sin clasificacion'
+_no_clasificados_ : 'Todos'
 _interpretacion_ : 'Interpretación'
 _nivel_de_usuario_ : 'Nivel de usuario'
 _observacion_ : 'Observación'

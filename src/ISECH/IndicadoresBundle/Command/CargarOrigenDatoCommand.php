@@ -25,6 +25,20 @@ class CargarOrigenDatoCommand extends ContainerAwareCommand {
         //Recuperar todos los origenes de datos
         $origenesDatos = $em->getRepository('IndicadoresBundle:OrigenDatos')->findAll();
 
+
+        //probar borrar todo antes de insertar                
+        $sql = "SELECT table_name FROM information_schema.tables WHERE table_name LIKE 'tmp_ind%'";        
+        $stmt = $em->getConnection()->prepare($sql);
+        $stmt->execute();
+        $tablas_temp = $stmt->fetchAll();
+        foreach ($tablas_temp as $key => $value) {
+            $dl = "DROP TABLE ".$value["table_name"];
+            $stmtd = $em->getConnection()->prepare($dl);
+            $stmtd->execute();
+        }
+        //fin borrar temporal      
+                
+
         foreach ($origenesDatos as $origenDato) {
             $ultima_lectura = $em->getRepository('IndicadoresBundle:ReporteActualizacion')->getUltimaActualizacion($origenDato->getId());
 
@@ -67,6 +81,17 @@ class CargarOrigenDatoCommand extends ContainerAwareCommand {
             }
             
             if ($dif >= 1) {
+
+                $sql = "";
+                $id = $origenDato->getId();
+                if($origenDato->getActualizacionIncremental() == true || $origenDato->getActualizacionIncremental() == 1) {
+                    $sql = "";
+                } else {
+                    $sql = "DELETE FROM fila_origen_dato WHERE id_origen_dato='$id';";
+                }
+                $stmt = $em->getConnection()->prepare($sql);
+                $stmt->execute();
+
                 // Recuperar el nombre y significado de los campos del origen de datos
                 $campos_sig = array();
                 $campos = $origenDato->getCampos();

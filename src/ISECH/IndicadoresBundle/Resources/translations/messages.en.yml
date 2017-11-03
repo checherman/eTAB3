@@ -289,7 +289,7 @@ tablero:
   tipo_grafico_principal: Main chart type
   tipo_grafico_secundario: Second chart type
 
-_no_clasificados_ : 'Not rated'
+_no_clasificados_ : 'All'
 _interpretacion_ : 'Interpretation'
 _nivel_de_usuario_ : 'User Level'
 _observacion_ : 'Observation'

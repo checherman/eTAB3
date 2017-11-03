@@ -160,7 +160,6 @@ class FichaTecnicaRepository extends EntityRepository
                 INTO  TEMP $tabla" . "_var
                 FROM $tabla
                 GROUP BY $campos $campos_calculados_nombre
-                HAVING  $oper(calculo::numeric) > 0
                     ;";
 
             //aplicar transformaciones si las hubieran
@@ -223,7 +222,7 @@ class FichaTecnicaRepository extends EntityRepository
                             WHERE ($campos) NOT IN (SELECT $campos FROM $t1);
                                 ";
                 //Quitar aquellos grupos que no tengan ningún dato para el grupo según la dimensión
-                $sql .= "INSERT INTO  no_acum SELECT $dimension FROM $t1 GROUP BY $dimension HAVING (SUM($campo_calculo) = 0);  ";
+                $sql .= "INSERT INTO  no_acum SELECT $dimension FROM $t1 GROUP BY $dimension ;  ";
             }
         }
         foreach ($fichaTecnica->getVariables() as $variable) {

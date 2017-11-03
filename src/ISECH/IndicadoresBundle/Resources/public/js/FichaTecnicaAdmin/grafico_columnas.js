@@ -252,6 +252,9 @@ graficoColumnas = function(ubicacion, datos, colorChosen, categoryChoosen)
 		svg.selectAll("rect").on("click", function(d, i) {
 			descenderNivelDimension(contexto.zona, d.category);
 		});	
+		svg.selectAll("text").on("click", function (d, i) {
+			descenderNivelDimension(contexto.zona, d.category);
+		});	
 		
 		if (this.color == null)
 			svg.selectAll("rect").attr("fill", function(d, i) {

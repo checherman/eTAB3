@@ -226,7 +226,7 @@ class MatrizSeguimientoRESTController extends Controller {
         $resp = array();
         $em = $this->getDoctrine()->getEntityManager(); 
         $bien = true;
-        $anio = $request->request->get('anio');
+        $anio   = $request->request->get('anio');
         $matriz = $request->request->get('matriz');
         $existe = $em->getRepository('IndicadoresBundle:MatrizSeguimiento')->findBy(
             array(
@@ -455,7 +455,7 @@ class MatrizSeguimientoRESTController extends Controller {
         $resp = array();
         $em = $this->getDoctrine()->getEntityManager(); 
         $bien = true;
-        $anio = $request->request->get('anio');
+        $anio   = $request->request->get('anio');
         $matriz = $request->request->get('matriz');
         $existe = $em->getRepository('IndicadoresBundle:MatrizSeguimiento')->findBy(
             array(

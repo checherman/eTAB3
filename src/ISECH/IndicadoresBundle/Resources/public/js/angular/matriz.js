@@ -384,8 +384,10 @@ App
                     if (!isNaN(v.real) && v != null && v != '' && v.planificado != null && v.planificado != '') {
                         temporalK[ind.id][k] = v.real;
                         acumulado = acumulado + (v.real * 1);
-                        v.real = acumulado;
-                        ind[k].real = acumulado;
+                        if(v.real != null){
+                            v.real = acumulado;
+                            ind[k].real = acumulado;
+                        }
                     }
                     $scope.valorAbsoluto(ind, ind.id, k);
                 }
