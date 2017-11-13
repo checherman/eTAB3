@@ -130,7 +130,7 @@ class SocialController extends Controller {
             $qb = $em->createQueryBuilder();
             $qb->select('u');
             $qb->from('IndicadoresBundle:User', 'u');
-            $qb->where($qb->expr()->in('u.id', $req->get('usuario_sala')));
+            //$qb->where($qb->expr()->in('u.id', $req->get('usuario_sala')));
             $users = $qb->getQuery()->getResult();
 
             foreach($users as $usuario)
@@ -148,7 +148,6 @@ class SocialController extends Controller {
                     $documento1 = $this->container->getParameter('kernel.root_dir').'/../web/bundles/indicadores/images/logo_salud.png';
                     $message = \Swift_Message::newInstance()
                         ->attach(\Swift_Attachment::fromPath($documento1))
-                        ->attach(\Swift_Attachment::fromPath($documento2))
                         ->setSubject('Sala eTAB')
                         ->setFrom('eTAB@SM2015.com.mx')
                         ->setTo($usuario->getEmail()) 

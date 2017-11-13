@@ -340,13 +340,13 @@ class IndicadorController extends Controller
             if($request->get("ajax"))
             {
                 $ft=$request->get("ft");
-                $cu=",";
+                $cu=[];
                 if($ft!="")
                 {
                     $fichaTecnica = $em->getRepository("IndicadoresBundle:FichaTecnica")->indicadorClasificacionTecnica($ft);
                     $ftecnica="";
                     foreach ($fichaTecnica as $item)                        
-                        $cu.=$item["id"].",";
+                        array_push($cu, $item["id"]);
                 }
                 
                 $clasificacionUso = $em->getRepository("IndicadoresBundle:ClasificacionUso")->findAll();
@@ -400,7 +400,7 @@ class IndicadorController extends Controller
                             $categorias_indicador[$cat->getId()]['indicadores'][] = $ind;   
                             if($ft!="")
                             {
-                                if(stripos($cu,"".$ind->getId()))
+                                if (in_array($ind->getId(), $cu))
                                 $indicadores_clasificados[] =array("id"=> $ind->getId(),"nombre"=>$ind->getNombre(), 'unidadMedida' => $ind->getUnidadMedida());
                             }
                             else                        
