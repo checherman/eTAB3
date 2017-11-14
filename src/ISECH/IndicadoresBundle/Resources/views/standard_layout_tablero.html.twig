@@ -96,6 +96,9 @@ file that was distributed with this source code.
       $(document).ready(function(e) {
                 $("#dashboard").attr("href",$("#tablero").val());
             });
+      function cerrar_div_carga(){
+        $("#div_carga").attr("style","display: none");
+      }
       </script>
             {% include (['IndicadoresBundle::messages_js.html.twig']|join) %}
         {% endblock %}
@@ -270,6 +273,13 @@ file that was distributed with this source code.
     
            
                 <div id="div_carga" class='affix'>
+                    <span class="btn btn-default glyphicon glyphicon-remove" style="
+                        position: absolute;
+                        top: 92px;
+                        right: 20px;
+                        font-size: 16pt;
+                        z-index: 99999999;
+                    " onclick="cerrar_div_carga()"></span>
                     <div id="cargador"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span></div>
                 </div>
                 {% block sonata_admin_content %}
