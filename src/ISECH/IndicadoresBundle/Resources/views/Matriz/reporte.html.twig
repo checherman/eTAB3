@@ -220,8 +220,8 @@
                                         <td class="nombre_matriz"><% inde.fuente %></td>
                                         <td> <input type="checkbox" ng-click="acumular[inde.id] = !acumular[inde.id]; acumularAbsoluto(inde);" class="form-control" style="width:25px; height:25px; float: left; margin: -5px 1px 0px 7px;"> </td>
                                         <td class="nombre_matriz" width="100px"><% inde.meta %></td>
-                                        <td ng-repeat="k in meses" width="110px" ng-init="valorAbsoluto(inde, inde.id, k)" style="background: <% (statusx[inde.id][k] >= 0) && statusx[inde.id][k] < 70 ? 'red' : statusx[inde.id][k] >= 70 && statusx[inde.id][k] < 85 ? 'gold' : statusx[inde.id][k] >= 85 ? 'limegreen' : ''; %> !important;">
-                                            <table width="100%" class="list-group" >
+                                        <td ng-repeat="k in meses" width="110px" ng-init="valorAbsoluto(inde, inde.id, k)" style="background: <% inde[k].planificado > 0 &&(statusx[inde.id][k] >= 0) && statusx[inde.id][k] < 70 ? 'red' : statusx[inde.id][k] >= 70 && statusx[inde.id][k] < 85 ? 'gold' : statusx[inde.id][k] >= 85 ? 'limegreen' : ''; %> !important;">
+                                            <table width="100%" class="list-group" ng-if="inde[k].planificado > 0">
                                                 <tbody style="border:none">
                                                     
                                                     <tr style="background: darkgray;" ng-if="verR && inde[k].real >= 0" class="list-group-item matriz-planeacion-texto" align="center"><th><% inde[k].real | number : 2 %></th></tr>

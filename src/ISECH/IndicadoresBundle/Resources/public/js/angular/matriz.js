@@ -345,7 +345,7 @@ App
             if (angular.isUndefined($scope.statusx[id][k])) {
                 $scope.statusx[id][k] = '';
             }
-            if (inde[k].real != null && inde[k].planificado != null) {
+            if (inde[k].real != null && inde[k].planificado != null && inde[k].real != '' && inde[k].planificado != '') {
                 $scope.statusx[id][k] = inde[k].real / inde[k].planificado * 100;
             } else {
                 $scope.statusx[id][k] = -1;
