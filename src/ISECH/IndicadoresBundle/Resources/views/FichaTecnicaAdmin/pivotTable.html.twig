@@ -19,6 +19,8 @@
     <script src="{{ asset('bundles/indicadores/js/pivotTable/gcharts_renderers.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bundles/indicadores/js/rasterizeHTML.allinone.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bundles/indicadores/js/jquery.searchFilter.js') }}" type="text/javascript"></script>
+
+    <script src="{{ asset('bundles/indicadores/js/export_plugin/filesaver.js') }}" type="text/javascript"></script>
 	
 <style>
 .ui-autocomplete { max-height: 200px; overflow:visible; z-index:999999999}
@@ -59,6 +61,7 @@
                 <i class="glyphicon glyphicon-flag"></i> <span class="hidden-xs">{{"indicadores"|trans}}</span>
             </a> 
             <span id="opcion_exportar" style="display:none">
+            <button id='export_excel' class="btn btn-warning" title="Exportar todos los datos a excel"><span class="glyphicon glyphicon-calendar"></span></button>            
             <button id='export' class="btn btn-info" title="{{'_exportar_tabla_datos_'|trans}}"><span class="glyphicon glyphicon-list-alt"></span></button>            
             <button id='ver_ficha' class="btn btn-info" title="{{'ver_ficha_tecnica'|trans}}"><span class="glyphicon glyphicon-briefcase"></span> </button>  
             <button id='export_grp' class="btn btn-primary" title="{{'_exportar_grafico_'|trans}}"><span class="glyphicon glyphicon-picture"></span> </button> 
@@ -242,6 +245,7 @@
         </div>
     </div>
 </div>    
+<div id="datos_excel" style="display:none"></div>
 <script>
 $(document).ready(function(){
 								
@@ -352,7 +356,15 @@ $(document).ready(function(){
 				$("#listado-favoritos li:nth-child("+(i+1)+")").removeAttr("style");
 		});
 	});	
-	
+	$('body').on('click','#export_excel',function() {
+        var titulo = $("#header_sala").text();
+        var colspan = $("#datos_excel table").find("tr:first th").length;
+        var excelData = "<table><tr><th colspan='" + colspan + "'><h1>" + titulo + " <h1></th></tr></table>";
+
+        excelData += document.getElementById('datos_excel').innerHTML;
+        var blob = new Blob([excelData], { type: "text/comma-separated-values;charset=utf-8" });
+        saveAs(blob, titulo + ".xls");
+    });
 	$('body').on('click','a.indicador',function() {
         var id_indicador = $(this).attr('id');
         var nombre_indicador = $(this).attr('data-name');
@@ -366,6 +378,34 @@ $(document).ready(function(){
                 $.pivotUtilities.gchart_renderers);
         $('#myModalMenu').modal('hide');
         $.getJSON(Routing.generate('get_datos_indicador', {id: id_indicador}), function(mps) {
+            var cabeza = []; 
+            $.each(mps[0], function(i, item) {
+                cabeza.push(i);
+            });
+            var tabla = `
+            <table>
+                <thead>
+                    <tr>`;
+                    $.each(cabeza, function(i, item) {
+                        tabla += `<th>`+item+`</th>`;
+                    });                           
+            tabla+=`</tr>
+                </thead>`;
+
+            tabla+=`<body>`;
+                        $.each(mps, function(i, item) {
+                            tabla += `<tr>`;
+                            $.each(item, function(c, value) {
+                                tabla += `<td>`+value+`</td>`;
+                            });
+                            tabla += `</tr>`;
+                        }); 
+
+            tabla +=`</tbody>
+            </table>`;
+            
+            $("#datos_excel").html(tabla);
+
             $("#output").pivotUI(mps, {
                 renderers: renderers
             });                    
