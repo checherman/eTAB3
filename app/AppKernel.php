@@ -49,7 +49,9 @@ class AppKernel extends Kernel
             
             new JMS\SerializerBundle\JMSSerializerBundle(),
 
-            new WhiteOctober\TCPDFBundle\WhiteOctoberTCPDFBundle()
+            new WhiteOctober\TCPDFBundle\WhiteOctoberTCPDFBundle(),
+			
+			new OS\ExcelBundle\OSExcelBundle
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

@@ -235,9 +235,10 @@ class OrigenDatoController extends Controller
                     }
                 }
             } else {
+				try {
                 $resultado['tipo_origen'] = 'archivo';
-                $reader = new Excel();
-                try {
+                $reader = $this->get('os.excel');;
+                
                     $reader->loadFile($origenDato->getAbsolutePath());
                     $datos = $reader->getSheet()->toArray($nullValue = null, $calculateFormulas = true, $formatData = false, $returnCellRef = false);
                     $resultado['nombre_campos'] = array_values(array_shift($datos));
