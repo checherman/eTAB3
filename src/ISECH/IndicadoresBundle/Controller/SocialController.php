@@ -222,7 +222,7 @@ class SocialController extends Controller {
         $usuarios_asignados = $em->getRepository('IndicadoresBundle:UsuarioGrupoIndicadores')
                         ->findBy(array('grupoIndicadores' => $idSala));
         $usuarios_asignados_por_usuario_actual = $em->getRepository('IndicadoresBundle:UsuarioGrupoIndicadores')
-                        ->findBy(array('usuarioAsigno'=>$this->getUser(),
+                        ->findBy(array('usuario'=>$this->getUser(),
                                         'grupoIndicadores' => $idSala));
         $usuarios_sala_por_usuario_actual = array(); 
         foreach ($usuarios_asignados_por_usuario_actual as $ua){

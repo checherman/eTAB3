@@ -478,14 +478,19 @@ class IndicadorController extends Controller
                 $grupoIndicadores = new \ISECH\IndicadoresBundle\Entity\GrupoIndicadores();
             }
             $grupoIndicadores->setNombre($sala->nombre);
+            $filtros = [];
             foreach ($sala->datos_indicadores as $grafico) {
                 if (!empty($grafico->id_indicador)) {
                     $indG = new \ISECH\IndicadoresBundle\Entity\GrupoIndicadoresIndicador();
                     $ind = $em->find('IndicadoresBundle:FichaTecnica', $grafico->id_indicador);
                     $indG->setDimension($grafico->dimension);
                     $indG->setFiltro($grafico->filtros);
-                    $indG->setFiltroPosicionDesde($grafico->filtro_desde);
-                    $indG->setFiltroPosicionHasta($grafico->filtro_hasta);
+                    $filtros[] = $grafico->filtros;
+                    if(property_exists($grafico, 'filtro_desde'))
+                        $indG->setFiltroPosicionDesde($grafico->filtro_desde);
+
+                    if(property_exists($grafico, 'filtro_hasta'))
+                        $indG->setFiltroPosicionHasta($grafico->filtro_hasta);
                     $indG->setFiltroElementos($grafico->filtro_elementos);
                     $indG->setIndicador($ind);
                     $indG->setPosicion($grafico->posicion);
@@ -508,6 +513,11 @@ class IndicadorController extends Controller
                 $em->flush();
             }
             $resp['estado'] = 'ok';
+            $resp['filtro'] = $filtros;
+            // guardar el log 
+            $util = new \ISECH\IndicadoresBundle\Util\Util();
+            $util->logUsuario($em, $req, $this->getUser(), "Crear sala", "Social");
+
             $em->getConnection()->commit();
         } catch (Exception $e) {
             $em->getConnection()->rollback();
@@ -546,6 +556,11 @@ class IndicadorController extends Controller
                 $em->flush();                               
                 
                 $resp['estado'] = 'ok';
+
+                // guardar el log 
+                $util = new \ISECH\IndicadoresBundle\Util\Util();
+                $util->logUsuario($em, $req, $this->getUser(), "Eliminar sala", "Social");
+
                 $em->getConnection()->commit();
             } 
             else 

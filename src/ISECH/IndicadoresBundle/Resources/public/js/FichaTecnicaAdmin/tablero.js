@@ -83,7 +83,14 @@ $(document).ready(function() {
 			$("#myModalSalas li i").removeClass('glyphicon-ok');			
 			$("#myModalSalas li i").addClass('glyphicon-plus');
     });
-	$('.salas-id').on('click',function(e) {
+
+	$("body").on('click','#_guardar_sala_',function(e) {
+		$("#info_sala").html('');
+        $("#info_sala").removeClass('alert-success');
+    	$("#info_sala").removeClass('alert-danger');
+	});
+
+	$("body").on('click','button.salas-id',function(e) {
 		titulo=$(this).attr('sala-nombre');
 		sala=$(this).attr('sala-id');
 		var id=this.id.split("_");
@@ -185,6 +192,7 @@ $(document).ready(function() {
 			$("#info_sala2").attr("style","display:");			
 			if (resp.estado === 'ok') 
 			{
+				$('#info_sala').html('Se elimino la sala '+sala).addClass('alert-success');
 				$('#nombre_sala').attr('id-sala', "");
 				$('#header_sala').html('');
 				$('#info_sala2').html('Se elimino la sala '+sala).addClass('alert-danger');
@@ -221,6 +229,7 @@ $(document).ready(function() {
 		});
 	});
     $('#guardar_sala').on('click',function(e) {
+    	console.log(1111);
         var arreglo_indicadores = [];
         var datos_sala = new Object();
 
@@ -257,16 +266,43 @@ $(document).ready(function() {
         datos_sala.nombre = $('#nombre_sala').val();
         datos_sala.id = $('#nombre_sala').attr('id-sala');
         datos_sala.datos_indicadores = arreglo_indicadores;
-
+        $("#info_sala").html('');
+        $("#info_sala").removeClass('alert-success');
+    	$("#info_sala").removeClass('alert-danger');
         $.getJSON(Routing.generate('sala_guardar'), {datos: JSON.stringify(datos_sala)},
         function(resp) {
-            if (resp.estado === 'ok') {
+        	if (resp.estado === 'ok') {
+            	$('#info_sala').html('Se guardo la sala, actaulizar la página para que los datos nuevos carguen').addClass('alert-success');
                 $('#nombre_sala').attr('id-sala', resp.id_sala);
                 $('#header_sala').html('<span class="glyphicon glyphicon-th"></span> ' + $('#nombre_sala').val() );
-                $('#myModal').modal('toggle');
+                $('#myModal').modal('show');
+
+                var existe = false;
+                
+                var total = 0;
+                $('#misalax').find('li').each(function(i, elemento){
+                	var sala = $(elemento).text().replace(/"/g, '').trim();
+                	if(sala == $('#nombre_sala').val())
+                		existe = true;
+                	total++;
+                });
+
+                if(!existe){
+                	total++;
+                	$('#misalax').append(
+                		'<li  class="list-group-item" style="min-height:55px" id="n_'+resp.id_sala+'">'+
+                            '<button type="button" data="'+resp.filtro+'" class="salas-id pull-left btn" style="margin-right:15px"'+
+                            'id="a_'+resp.id_sala+'"'+
+                            'sala-nombre="'+ $('#nombre_sala').val() +'" sala-id="'+resp.id_sala+'">'+
+                            '<i class="glyphicon glyphicon-plus"></i>'+
+                            '</button>'+$('#nombre_sala').val()+
+                        '</li>'
+                    );
+                    $("#salax").find("a:first").text('Salas ('+total+')');
+                }
             }
             else {
-                $('#info_sala').html('_error_guardar_sala_').addClass('alert-danger');
+                $('#info_sala').html('Error guardando').addClass('alert-danger');
             }
 
         });

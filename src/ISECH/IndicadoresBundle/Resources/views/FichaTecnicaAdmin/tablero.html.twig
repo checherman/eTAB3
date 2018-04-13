@@ -119,10 +119,11 @@ $(document).ready(function(){
         <div class="modal-body">
             <label for="nombre_sala">{{'_nombre_sala_'|trans}}</label>
             <textarea id='nombre_sala' id-sala='' rows="3" style="width: 100%" class="form-control"></textarea>
-            <span class='alert' id='info_sala'></span>
+            
         </div>
     
         <div class="modal-footer">
+            <span class='alert' id='info_sala'></span>
             <button id='elimina_sala' class="btn btn-danger" style="display:none">
             <i class="glyphicon glyphicon-minus"></i> 
             {{'_eliminar_cambios_'|trans}}</button>
@@ -396,6 +397,12 @@ $(document).ready(function(){
             <div class="tab-content">
                 <ul class="nav nav-tabs" id="salax">
                     <li class="active">
+                    <a href="#salas_1" data-toggle="tab">
+                    <i class="glyphicon glyphicon-exclamation-sign has-errors hide" data-original-title="" title=""></i>
+                    {{'_salas_'|trans}} ({{salas|length}})
+                    </a>
+                    </li>
+                    <li >
                     <a href="#salas_2" data-toggle="tab">
                     <i class="glyphicon glyphicon-exclamation-sign has-errors hide" data-original-title="" title=""></i>
                     Mis {{'_salas_'|trans}} ({{salasXusuario|length}})
@@ -406,13 +413,7 @@ $(document).ready(function(){
                     <i class="glyphicon glyphicon-exclamation-sign has-errors hide" data-original-title="" title=""></i>
                     {{'_salas_'|trans}} X Grupo ({{salasXgrupo|length}})
                     </a>
-                    </li>
-                    <li>
-                    <a href="#salas_1" data-toggle="tab">
-                    <i class="glyphicon glyphicon-exclamation-sign has-errors hide" data-original-title="" title=""></i>
-                    {{'_salas_'|trans}} ({{salas|length}})
-                    </a>
-                    </li>
+                    </li>                    
                 </ul>
             
                 <div class="tab-content">
@@ -1029,19 +1030,17 @@ $(document).ready(function(){
 });
 function openModalSala(sala,titulo,edit)
 {
+    $("#info_sala").html('');
+    $("#info_sala").removeClass('alert-success');
+    $("#info_sala").removeClass('alert-danger');
     $('#nombre_sala').attr('id-sala', sala);
     $('#nombre_sala').val(titulo);
-    if(edit=="0")
-    {
-        $("#elimina_sala").attr("data-id",sala);
-        $("#guardar_sala").attr("style","display:none");
-        $("#elimina_sala").attr("style","display:");
-    }
-    else
-    {       
-        $("#guardar_sala").attr("style","display:");
-        $("#elimina_sala").attr("style","display:none");
-    }
+    
+    $("#elimina_sala").attr("data-id",sala);
+    $("#elimina_sala").attr("style","display:");
+      
+    $("#guardar_sala").attr("style","display:");
+    
 }
 function indicadoresList(valor,che,ft)
 {
